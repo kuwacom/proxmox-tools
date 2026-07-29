@@ -1,2 +1,2 @@
-# proxmox-cmd-tools
+# proxmox-tools
 proxmox のコマンドを一括化したりするコマンドラインツールです
