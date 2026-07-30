@@ -10,6 +10,28 @@ proxmox のコマンドを一括化したりするコマンドラインツール
 ./pve-importdisk.sh [vmID] [imagePath] [targetPool] [diskNum]
 ```
 
+- `diskNum` は省略可能（デフォルト: `0`）
+- 既に同じスロット（`scsi<diskNum>`）にディスクが存在する場合は上書きを防ぐためエラー停止します
+
+オプション（環境変数で上書き可能）:
+
+| 変数        | デフォルト | 説明                                                                 |
+| ----------- | ---------- | -------------------------------------------------------------------- |
+| `DISK_SIZE` | (なし)     | インポート後にリサイズするディスクサイズ (例: `20G`)。未指定時はそのままのサイズ |
+
+例:
+
+```
+# 通常のインポート (diskNum=0)
+./pve-importdisk.sh 100 /tmp/ubuntu-22.04.img local-lvm
+
+# diskNum を明示指定
+./pve-importdisk.sh 100 /tmp/ubuntu-22.04.img local-lvm 1
+
+# インポート後に 20G にリサイズ
+DISK_SIZE=20G ./pve-importdisk.sh 100 /tmp/ubuntu-22.04.img local-lvm 0
+```
+
 ### pve-create-template.sh
 cloud image から VM テンプレートを作成し、指定したリソースプールに割り当てる。
 
